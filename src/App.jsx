@@ -1,34 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import MainLayout from './layout/MainLayout';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import Home from './pages/Home';
+import Productos from './pages/Productos';
+import Contacto from './pages/Contacto';
+import QuienesSomos from './pages/QuienesSomos';
+import './App.css';
+import axios from 'axios';
+import ProductoDetalle from './pages/ProductoDetalle';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const navigate = useNavigate();
+  const [listado,setListado] = useState([]);
+  const [error,setError] = useState(null);
 
+
+  useEffect(() => {
+    axios.get('https://fakestoreapi.com/products')
+    .then(function (response) {
+      setListado(response.data);
+    })
+    .catch(function (error) {
+      setError(error);
+    }); 
+  }, [])
+
+  
+  const verDetalle = () => {navigate('/ProductoDetalle')};
   return (
+
+
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+     
+      <Routes>
+        
+        <Route path='/' element={<MainLayout/>} >
+            <Route index element={<Home />} />
+            <Route
+            path="/Productos"
+            element={<Productos listado={listado} verDetalle={verDetalle}/>}
+            />
+            <Route
+            path="/QuienesSomos"
+            element={<QuienesSomos/>}
+            />
+            <Route
+            path="/Contacto"
+            element={<Contacto/>}
+            />
+            </Route>
+            <Route
+            path="/ProductoDetalle"
+            element={<ProductoDetalle/>}
+            />
+      </Routes>       
+        {error && <h1>{error.message}</h1>}
     </>
+     
   )
 }
 

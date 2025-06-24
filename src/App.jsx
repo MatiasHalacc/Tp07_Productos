@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import MainLayout from './layout/MainLayout';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Productos from './pages/Productos';
 import Contacto from './pages/Contacto';
@@ -10,7 +10,6 @@ import axios from 'axios';
 import ProductoDetalle from './pages/ProductoDetalle';
 
 function App() {
-  const navigate = useNavigate();
   const [listado,setListado] = useState([]);
   const [error,setError] = useState(null);
 
@@ -26,7 +25,6 @@ function App() {
   }, [])
 
   
-  const verDetalle = () => {navigate('/ProductoDetalle')};
   return (
 
 
@@ -38,7 +36,7 @@ function App() {
             <Route index element={<Home />} />
             <Route
             path="/Productos"
-            element={<Productos listado={listado} verDetalle={verDetalle}/>}
+            element={<Productos listado={listado}/>}
             />
             <Route
             path="/QuienesSomos"

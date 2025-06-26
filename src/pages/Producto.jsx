@@ -1,9 +1,10 @@
-import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import './producto.css'
 
-export default function Producto({ product }) {    
+export default function Producto({ product }) {  
+  const navigate = useNavigate();
     const verDetalle = (id)=>{
-        Navigate('/Contacto');
+        navigate('/ProductoDetalle/'+ id);
     }
 
     return (

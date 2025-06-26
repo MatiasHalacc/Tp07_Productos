@@ -48,8 +48,8 @@ function App() {
             />
             </Route>
             <Route
-            path="/ProductoDetalle"
-            element={<ProductoDetalle/>}
+            path="/ProductoDetalle/:id" 
+            element={<ProductoDetalle products={listado}/>} 
             />
       </Routes>       
         {error && <h1>{error.message}</h1>}

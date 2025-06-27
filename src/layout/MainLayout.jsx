@@ -1,36 +1,17 @@
-import React from 'react'
-import { NavLink, Outlet } from "react-router";
-import './MainLayout.css'
+import React from 'react';
+import { Outlet } from "react-router";
+import './MainLayout.css';
+import Footer from '../components/footer';
+import Header from '../components/Header';
 
 export default function MainLayout() {
   return (
     <>
-    
-        <nav className="Header">
-        <li className="listaNav">
-          <ul>
-            <NavLink to="/Productos" className="Links">
-              Productos
-            </NavLink>
-          </ul>
-          <ul>
-            <NavLink to="/QuienesSomos" className="Links">
-              QuienesSomos
-            </NavLink>
-          </ul>
-          <ul>
-            <NavLink to="/Contacto" className="Links">
-              Contacto
-            </NavLink>
-          </ul>
-          <ul>
-            <NavLink to="/" className="Links">
-              Home
-            </NavLink>
-          </ul>
-        </li>
-      </nav>
-      <Outlet/>
+      <Header />
+      <main className="MainContent">
+        <Outlet />
+      </main>
+      <Footer />      
     </>
-  )
+  );
 }

@@ -1,68 +1,67 @@
 .detalle-producto-container {
-    max-width: 900px;
-    margin: 60px auto;
-    padding: 40px;
-    display: flex;
-    gap: 40px;
-    border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    font-family: 'Helvetica Neue', sans-serif;
-    align-items: center;
-  }
-  
-  .detalle-producto-imagen {
-    flex: 1;
-    max-width: 400px;
-    height: auto;
-    border-radius: 16px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .detalle-producto-imagen:hover {
-    transform: scale(1.05);
-  }
-  
-  .detalle-producto-info {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .detalle-producto-nombre {
-    font-size: 32px;
-    font-weight: 600;
-    color: #222;
-  }
-  
-  .detalle-producto-descripcion {
-    font-size: 16px;
-    color: #555;
-    line-height: 1.6;
-  }
-  
-  .detalle-producto-precio {
-    font-size: 24px;
-    color: #1a1a1a;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .detalle-producto-btn {
-    padding: 12px 24px;
-    font-size: 16px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: fit-content;
-  }
-  
-  .detalle-producto-btn:hover {
-    background-color: #444;
-  }
-  
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+  font-family: 'Helvetica Neue', sans-serif;
+  align-items: center;
+}
+
+.detalle-producto-imagen {
+  flex: 1;
+  max-width: 280px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.detalle-producto-imagen:hover {
+  transform: scale(1.05);
+}
+
+.detalle-producto-info {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detalle-producto-nombre {
+  font-size: 24px;
+  font-weight: 600;
+  color: #222;
+}
+
+.detalle-producto-descripcion {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.detalle-producto-precio {
+  font-size: 18px;
+  color: #1a1a1a;
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.detalle-producto-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+.detalle-producto-btn:hover {
+  background-color: #444;
+}

@@ -4,7 +4,7 @@ import './Productos.css'
 export default function Productos({listado}) {
   return (
    <>
-    <div className="product-list">
+    <div className="product-grid">
       {listado.map((prod, index) => (
         <Producto key={index} product={prod} />
       ))}

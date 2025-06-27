@@ -1,6 +1,8 @@
-.product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-  }
-  
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 60px 20px; /* Espacio elegante arriba y abajo */
+  background-color: #f9f9f9;
+}

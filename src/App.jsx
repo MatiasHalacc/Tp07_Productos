@@ -46,11 +46,12 @@ function App() {
             path="/Contacto"
             element={<Contacto/>}
             />
-            </Route>
             <Route
             path="/ProductoDetalle/:id" 
             element={<ProductoDetalle products={listado}/>} 
             />
+        </Route>
+            
       </Routes>       
         {error && <h1>{error.message}</h1>}
     </>

@@ -1,5 +1,5 @@
-import React, {  } from 'react'
-import Producto  from './Producto'
+import React from 'react'
+import Producto  from '../components/Producto'
 import './Productos.css'
 export default function Productos({listado}) {
   return (

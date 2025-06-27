@@ -1,30 +1,71 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import './ProductoDetalle.css'
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import './ProductoDetalle.css';
+
 export default function ProductoDetalle() {
-  const [producto,setproducto] = useState(null);
+  const [producto, setproducto] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    axios.get('https://fakestoreapi.com/products/' +id)
-    .then(function (response) {
-      setproducto(response.data);
-    })
-    .catch(function () {
-      console.log("error")
-    }); 
-  }, [id])
+    let minLoadTimer;
+    let maxLoadTimer;
+
+    setLoading(true);
+    setproducto(null);
+
+
+    const fetchProduct = axios.get('https://fakestoreapi.com/products/' + id);
+
+ 
+    const minDelay = new Promise(resolve => {
+      minLoadTimer = setTimeout(resolve, 1500);
+    });
+
+  
+    maxLoadTimer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    Promise.all([fetchProduct, minDelay])
+      .then(([response]) => {
+        setproducto(response.data);
+        setLoading(false);
+        clearTimeout(maxLoadTimer);
+      })
+      .catch(() => {
+        console.log("error");
+        setLoading(false);
+        clearTimeout(maxLoadTimer);
+      });
+
+    return () => {
+      clearTimeout(minLoadTimer);
+      clearTimeout(maxLoadTimer);
+    };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="spinner"></div>
+        <p>Cargando producto...</p>
+      </div>
+    );
+  }
 
   if (!producto) {
-    return <p>Cargando producto...</p>;
+    return <p>Producto no encontrado.</p>;
   }
 
   return (
     <div className="detalle-producto-container">
-      <img 
-        src={producto.image} 
-        alt={producto.title} 
-        className="detalle-producto-imagen" 
+      <img
+        src={producto.image}
+        alt={producto.title}
+        className="detalle-producto-imagen"
       />
 
       <div className="detalle-producto-info">
@@ -38,6 +79,13 @@ export default function ProductoDetalle() {
           ${producto.price}
         </div>
 
+        <button
+          className="detalle-producto-btn detalle-producto-btn-volver"
+          onClick={() => navigate(-1)}
+        >
+          Volver
+        </button>
+
         <button className="detalle-producto-btn">
           Añadir al carrito
         </button>
@@ -45,9 +93,6 @@ export default function ProductoDetalle() {
     </div>
   );
 }
-
-
-
 
 
   

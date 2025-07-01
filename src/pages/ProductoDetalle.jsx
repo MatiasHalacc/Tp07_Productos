@@ -1,11 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './ProductoDetalle.css';
 
-export default function ProductoDetalle() {
-  const [producto, setproducto] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function ProductoDetalle({producto, loading, setproducto, setLoading}) {
+  
   const { id } = useParams();
   const navigate = useNavigate();
 

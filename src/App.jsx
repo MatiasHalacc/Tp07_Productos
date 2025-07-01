@@ -12,7 +12,8 @@ import ProductoDetalle from './pages/ProductoDetalle';
 function App() {
   const [listado,setListado] = useState([]);
   const [error,setError] = useState(null);
-
+  const [producto, setproducto] = useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios.get('https://fakestoreapi.com/products')
@@ -24,19 +25,18 @@ function App() {
     }); 
   }, [])
 
-  
   return (
-
-
-    <>
-     
+    <>  
       <Routes>
-        
         <Route path='/' element={<MainLayout/>} >
             <Route index element={<Home />} />
             <Route
+            path="/Productos/:categoria"
+            element={<Productos listado={listado} loading={loading} setproducto={setproducto} setLoading={setLoading}/>}
+            />
+            <Route
             path="/Productos"
-            element={<Productos listado={listado}/>}
+            element={<Productos listado={listado} loading={loading} setproducto={setproducto} setLoading={setLoading}/>}
             />
             <Route
             path="/QuienesSomos"
@@ -48,7 +48,7 @@ function App() {
             />
             <Route
             path="/ProductoDetalle/:id" 
-            element={<ProductoDetalle products={listado}/>} 
+            element={<ProductoDetalle producto={producto} loading={loading} setproducto={setproducto} setLoading={setLoading}/>} 
             />
         </Route>
             

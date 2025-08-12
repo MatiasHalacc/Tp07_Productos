@@ -10,7 +10,7 @@
   align-items: center;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  height: 400px; /* antes 360px, ahora un poco más alta */
+  height: 400px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -57,7 +57,7 @@ button {
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.25s ease;
-  margin-bottom: 8px; /* separa los botones */
+  margin-bottom: 8px;
 }
 
 button:hover {
@@ -70,4 +70,42 @@ button:hover {
 
 .add-cart:hover {
   background-color: #0c9900;
+}
+
+.add-cart-container {
+  position: relative;
+  display: inline-block;
+}
+
+.toast-message {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  background-color: #0a7f00;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+  box-shadow: 0 4px 14px rgba(0, 127, 0, 0.5);
+  opacity: 0;
+  animation: fadeInOut 2.5s forwards;
+  z-index: 9999;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

@@ -1,10 +1,18 @@
 import { useNavigate } from 'react-router';
 import './producto.css';
-import { useCart } from '../context/CartContext'; // importar el hook
+import { useCart } from '../context/CartContext';
+import { useState } from 'react';
 
-export default function Producto({ product }) {  
+export default function Producto({ product }) {
   const navigate = useNavigate();
-  const { addToCart } = useCart(); // obtener la función del contexto
+  const { addToCart } = useCart();
+  const [toastVisible, setToastVisible] = useState(false);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 2500);
+  };
 
   return (
     <div className="product">
@@ -12,10 +20,16 @@ export default function Producto({ product }) {
       <h2 className="product-item">{product.title}</h2>
       <div className="product-price">{product.price}$</div>
 
-      <button onClick={() => navigate('/ProductoDetalle/' + product.id)}>Ver más</button>
-      <button className="add-cart" onClick={() => addToCart(product)}>
-        Añadir al carrito
+      <button onClick={() => navigate('/ProductoDetalle/' + product.id)}>
+        Ver más
       </button>
+
+      <div className="add-cart-container">
+        <button className="add-cart" onClick={handleAddToCart}>
+          Añadir al carrito
+        </button>
+        {toastVisible && <div className="toast-message">Producto agregado al carrito</div>}
+      </div>
     </div>
   );
 }

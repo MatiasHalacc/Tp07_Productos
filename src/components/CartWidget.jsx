@@ -1,7 +1,7 @@
-// src/components/CartWidget.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import CartList from "./CartList";
 import "./CartWidget.css";
 
 export default function CartWidget() {
@@ -15,6 +15,7 @@ export default function CartWidget() {
   } = useCart();
 
   const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const ref = useRef();
 
@@ -28,6 +29,28 @@ export default function CartWidget() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const showMessage = (msg) => {
+    setMessage(msg);
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  };
+
+  const handleIncrement = (id) => {
+    incrementQuantity(id);
+    showMessage("Producto agregado correctamente");
+  };
+
+  const handleDecrement = (id) => {
+    decrementQuantity(id);
+    showMessage("Producto removido correctamente");
+  };
+
+  const handleRemove = (id, title) => {
+    removeFromCart(id);
+    showMessage(`Producto "${title}" eliminado correctamente`);
+  };
+
   return (
     <div className="cart-widget" ref={ref}>
       <button
@@ -38,40 +61,30 @@ export default function CartWidget() {
         🛒 {cartProducts.length}
       </button>
 
+      {message && <div className="cart-message">{message}</div>}
+
       {open && (
         <div className="cart-dropdown">
           {cartProducts.length === 0 ? (
             <p className="empty-msg">Tu carrito está vacío</p>
           ) : (
             <>
-              <ul className="cart-list">
-                {cartProducts.map((item) => (
-                  <li key={item.id} className="cart-item">
-                    <img src={item.image} alt={item.title} />
-                    <div className="item-info">
-                      <p className="item-title">{item.title}</p>
-                      <div className="quantity-controls">
-                        <button onClick={() => decrementQuantity(item.id)}>-</button>
-                        <span>{item.quantity}</span>
-                        <button onClick={() => incrementQuantity(item.id)}>+</button>
-                      </div>
-                      <p>Precio: ${(item.price * item.quantity).toFixed(2)}</p>
-                    </div>
-                    <button
-                      className="remove-btn"
-                      onClick={() => removeFromCart(item.id)}
-                      aria-label={`Eliminar ${item.title}`}
-                    >
-                      ×
-                    </button>
-                  </li>
-                ))}
-              </ul>
-
+              <CartList
+                cartProducts={cartProducts}
+                incrementQuantity={handleIncrement}
+                decrementQuantity={handleDecrement}
+                removeFromCart={handleRemove}
+              />
               <div className="cart-footer">
                 <p className="total">Total: ${getTotal().toFixed(2)}</p>
                 <div className="buttons">
-                  <button className="clear-btn" onClick={clearCart}>
+                  <button
+                    className="clear-btn"
+                    onClick={() => {
+                      clearCart();
+                      showMessage("Carrito vaciado correctamente");
+                    }}
+                  >
                     Vaciar carrito
                   </button>
                   <button

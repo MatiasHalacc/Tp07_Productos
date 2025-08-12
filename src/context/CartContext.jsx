@@ -1,4 +1,3 @@
-// src/context/CartContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
@@ -6,7 +5,7 @@ const CartContext = createContext();
 // eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => useContext(CartContext);
 
-export function CartProvider({ children }) {
+export default function CartProvider({ children }) {
   const [cartProducts, setCartProducts] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -16,15 +15,17 @@ export function CartProvider({ children }) {
     localStorage.setItem("cart", JSON.stringify(cartProducts));
   }, [cartProducts]);
 
-  const addToCart = (product) => {
+  const addToCart = (product, quantity = 1) => {
     setCartProducts((prev) => {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
         return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
         );
       } else {
-        return [...prev, { ...product, quantity: 1 }];
+        return [...prev, { ...product, quantity }];
       }
     });
   };
@@ -48,12 +49,11 @@ export function CartProvider({ children }) {
 
   const decrementQuantity = (productId) => {
     setCartProducts((prev) =>
-      prev
-        .map((item) =>
-          item.id === productId
-            ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
-            : item
-        )
+      prev.map((item) =>
+        item.id === productId
+          ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
+          : item
+      )
     );
   };
 

@@ -1,9 +1,17 @@
-import React from 'react'
-import { useCart } from '../context/CartContext'
-import './Carrito.css'
+import React from "react";
+import { useCart } from "../context/CartContext";
+import CartList from "../components/CartList";
+import "./Carrito.css";
 
 export default function Carrito() {
-  const { cartProducts, removeFromCart, clearCart, getTotal } = useCart();
+  const {
+    cartProducts,
+    removeFromCart,
+    clearCart,
+    getTotal,
+    incrementQuantity,
+    decrementQuantity,
+  } = useCart();
 
   return (
     <div className="carrito-container">
@@ -12,25 +20,20 @@ export default function Carrito() {
         <p>No tienes productos en el carrito.</p>
       ) : (
         <>
-          <ul>
-            {cartProducts.map((item) => (
-              <li key={item.id} className="carrito-item">
-                <img src={item.image} alt={item.title} />
-                <div>
-                  <h4>{item.title}</h4>
-                  <p>Cantidad: {item.quantity}</p>
-                  <p>Precio: ${(item.price * item.quantity).toFixed(2)}</p>
-                  <button onClick={() => removeFromCart(item.id)}>Eliminar</button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <CartList
+            cartProducts={cartProducts}
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
+            removeFromCart={removeFromCart}
+          />
           <div className="carrito-total">
             <h3>Total: ${getTotal().toFixed(2)}</h3>
-            <button className="clear-btn" onClick={clearCart}>Vaciar Carrito</button>
+            <button className="clear-btn" onClick={clearCart}>
+              Vaciar Carrito
+            </button>
           </div>
         </>
       )}
     </div>
-  )
+  );
 }

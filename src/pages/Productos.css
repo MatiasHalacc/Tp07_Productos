@@ -7,12 +7,17 @@
   background-color: #f9f9f9;
 }
 
+.categorias-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 30px 20px 10px;
+}
+
 .categorias-bar {
   display: flex;
-  justify-content: center;
   gap: 15px;
-  padding: 30px 20px 10px;
-  background-color: #fff;
 }
 
 .categoria-btn {
@@ -28,4 +33,18 @@
 
 .categoria-btn:hover {
   background-color: #555;
+}
+
+.carrito-icon {
+  font-size: 1.4rem;
+  cursor: pointer;
+  background-color: #333;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+.carrito-icon span {
+  margin-left: 5px;
+  font-weight: bold;
 }

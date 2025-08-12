@@ -8,6 +8,8 @@ import QuienesSomos from './pages/QuienesSomos';
 import './App.css';
 import axios from 'axios';
 import ProductoDetalle from './pages/ProductoDetalle';
+import Carrito from './pages/Carrito';
+import CartWidget from './components/CartWidget';
 
 function App() {
   const [listado,setListado] = useState([]);
@@ -27,6 +29,7 @@ function App() {
 
   return (
     <>  
+    <CartWidget/>
       <Routes>
         <Route path='/' element={<MainLayout/>} >
             <Route index element={<Home />} />
@@ -50,6 +53,7 @@ function App() {
             path="/ProductoDetalle/:id" 
             element={<ProductoDetalle producto={producto} loading={loading} setproducto={setproducto} setLoading={setLoading}/>} 
             />
+            <Route path="/carrito" element={<Carrito />} />
         </Route>
             
       </Routes>       

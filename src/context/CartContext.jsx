@@ -1,52 +1,75 @@
+// src/context/CartContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
 
-const CarritoContext = createContext();
+const CartContext = createContext();
 
-export const useCarrito = () => useContext(CarritoContext);
+// eslint-disable-next-line react-refresh/only-export-components
+export const useCart = () => useContext(CartContext);
 
 export function CartProvider({ children }) {
-  const [productosCarrito, setProductosCarrito] = useState(() => {
-    const carritoGuardado = localStorage.getItem("carrito");
-    return carritoGuardado ? JSON.parse(carritoGuardado) : [];
+  const [cartProducts, setCartProducts] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem("carrito", JSON.stringify(productosCarrito));
-  }, [productosCarrito]);
+    localStorage.setItem("cart", JSON.stringify(cartProducts));
+  }, [cartProducts]);
 
-  const agregarAlCarrito = (producto) => {
-    setProductosCarrito((prev) => {
-      const existente = prev.find((item) => item.id === producto.id);
-      if (existente) {
+  const addToCart = (product) => {
+    setCartProducts((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
         return prev.map((item) =>
-          item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
-        return [...prev, { ...producto, cantidad: 1 }];
+        return [...prev, { ...product, quantity: 1 }];
       }
     });
   };
 
-  const eliminarDelCarrito = (idProducto) => {
-    setProductosCarrito((prev) => prev.filter((item) => item.id !== idProducto));
+  const removeFromCart = (productId) => {
+    setCartProducts((prev) => prev.filter((item) => item.id !== productId));
   };
 
-  const vaciarCarrito = () => setProductosCarrito([]);
+  const clearCart = () => setCartProducts([]);
 
-  const obtenerTotal = () =>
-    productosCarrito.reduce((total, item) => total + item.precio * item.cantidad, 0);
+  const getTotal = () =>
+    cartProducts.reduce((total, item) => total + item.price * item.quantity, 0);
+
+  const incrementQuantity = (productId) => {
+    setCartProducts((prev) =>
+      prev.map((item) =>
+        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const decrementQuantity = (productId) => {
+    setCartProducts((prev) =>
+      prev
+        .map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
+            : item
+        )
+    );
+  };
 
   return (
-    <CarritoContext.Provider
+    <CartContext.Provider
       value={{
-        productosCarrito,
-        agregarAlCarrito,
-        eliminarDelCarrito,
-        vaciarCarrito,
-        obtenerTotal,
+        cartProducts,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        getTotal,
+        incrementQuantity,
+        decrementQuantity,
       }}
     >
       {children}
-    </CarritoContext.Provider>
+    </CartContext.Provider>
   );
 }

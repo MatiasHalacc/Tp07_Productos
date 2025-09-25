@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router';
 import './producto.css';
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
+import PropTypes from "prop-types";
+import { productShape } from "../propshape/propshapes";
 
 export default function Producto({ product }) {
   const navigate = useNavigate();
@@ -33,3 +35,7 @@ export default function Producto({ product }) {
     </div>
   );
 }
+
+Producto.propTypes = {
+  product: productShape.isRequired,
+};

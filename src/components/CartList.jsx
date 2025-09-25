@@ -1,5 +1,7 @@
 import React from 'react';
 import './CartList.css';
+import PropTypes from "prop-types";
+import { cartItemShape } from "../propshape/propshapes"; 
 
 export default function CartList({
   cartProducts,
@@ -36,3 +38,11 @@ export default function CartList({
     </ul>
   );
 }
+
+CartList.propTypes = {
+  cartProducts: PropTypes.arrayOf(cartItemShape).isRequired,
+  incrementQuantity: PropTypes.func.isRequired,
+  decrementQuantity: PropTypes.func.isRequired,
+  removeFromCart: PropTypes.func.isRequired,
+};
+

@@ -15,11 +15,11 @@ export default function Header() {
 
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         setOpen(false);
       }
     }
@@ -27,7 +27,7 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const totalQuantity = cartProducts.reduce((acc, item) => acc + item.quantity, 0);
+  const totalQuantity = cartProducts.reduce((acc:any, item:any) => acc + item.quantity, 0);
 
   return (
     <>
@@ -63,7 +63,7 @@ export default function Header() {
                 ) : (
                   <>
                     <ul className="cart-list">
-                      {cartProducts.map((item) => (
+                      {cartProducts.map((item:any) => (
                         <li key={item.id} className="cart-item">
                           <img src={item.image} alt={item.title} />
                           <div className="item-info">

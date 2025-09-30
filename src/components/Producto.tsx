@@ -2,12 +2,15 @@ import { useNavigate } from 'react-router';
 import './producto.css';
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
-import PropTypes from "prop-types";
-import { productShape } from "../propshape/propshapes";
+import { productShape } from "../propshape/propShapes";
 
-export default function Producto({ product }) {
+type ProductoProp = {
+  product: productShape,
+};
+
+export default function Producto({ product }:ProductoProp) {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const { addToCart}:any = useCart();
   const [toastVisible, setToastVisible] = useState(false);
 
   const handleAddToCart = () => {
@@ -35,7 +38,3 @@ export default function Producto({ product }) {
     </div>
   );
 }
-
-Producto.propTypes = {
-  product: productShape.isRequired,
-};

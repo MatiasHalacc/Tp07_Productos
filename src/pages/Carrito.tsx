@@ -11,7 +11,7 @@ export default function Carrito() {
     getTotal,
     incrementQuantity,
     decrementQuantity,
-  } = useCart();
+  }:any = useCart();
 
   return (
     <div className="carrito-container">

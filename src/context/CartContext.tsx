@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const CartContext = createContext();
+const CartContext = createContext<any>(null);
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => useContext(CartContext);
 
-export default function CartProvider({ children }) {
+export default function CartProvider({ children }:any) {
   const [cartProducts, setCartProducts] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -15,11 +15,11 @@ export default function CartProvider({ children }) {
     localStorage.setItem("cart", JSON.stringify(cartProducts));
   }, [cartProducts]);
 
-  const addToCart = (product, quantity = 1) => {
-    setCartProducts((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+  const addToCart = (product:any, quantity = 1) => {
+    setCartProducts((prev:any) => {
+      const existing = prev.find((item:any) => item.id === product.id);
       if (existing) {
-        return prev.map((item) =>
+        return prev.map((item:any) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item
@@ -30,26 +30,26 @@ export default function CartProvider({ children }) {
     });
   };
 
-  const removeFromCart = (productId) => {
-    setCartProducts((prev) => prev.filter((item) => item.id !== productId));
+  const removeFromCart = (productId:any) => {
+    setCartProducts((prev:any) => prev.filter((item:any) => item.id !== productId));
   };
 
   const clearCart = () => setCartProducts([]);
 
   const getTotal = () =>
-    cartProducts.reduce((total, item) => total + item.price * item.quantity, 0);
+    cartProducts.reduce((total:any, item:any) => total + item.price * item.quantity, 0);
 
-  const incrementQuantity = (productId) => {
-    setCartProducts((prev) =>
-      prev.map((item) =>
+  const incrementQuantity = (productId:any) => {
+    setCartProducts((prev:any) =>
+      prev.map((item:any) =>
         item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
-  const decrementQuantity = (productId) => {
-    setCartProducts((prev) =>
-      prev.map((item) =>
+  const decrementQuantity = (productId:any) => {
+    setCartProducts((prev:any) =>
+      prev.map((item:any) =>
         item.id === productId
           ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
           : item
